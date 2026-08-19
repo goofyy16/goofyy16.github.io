@@ -1,51 +1,343 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Goofyy Timer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Timer</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            background:
+                linear-gradient(135deg, #071b2e, #0b4261, #071b2e);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            overflow: hidden;
+
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+
+        /* ==========================
+           BACKGROUND GRID
+        ========================== */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.07) 2px,
+                    transparent 2px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.07) 2px,
+                    transparent 2px
+                );
+
+            background-size: 50px 50px;
+
+            pointer-events: none;
+        }
+
+
+        /* ==========================
+           TIMER
+        ========================== */
+
+        #timer {
+
+            position: relative;
+
+            z-index: 2;
+
+            font-family:
+                "Arial Black",
+                Impact,
+                sans-serif;
+
+            font-size: clamp(60px, 14vw, 150px);
+
+            font-weight: 900;
+
+            letter-spacing: 6px;
+
+            color: #ffffff;
+
+            text-align: center;
+
+            /* Geometry Dash-style outline/shadow */
+
+            text-shadow:
+
+                -5px -5px 0 #111,
+                 5px -5px 0 #111,
+                -5px  5px 0 #111,
+                 5px  5px 0 #111,
+
+                 0 0 8px #36e6ff,
+                 0 0 20px #36e6ff;
+        }
+
+
+        /* ==========================
+           LITTLE CUBE
+        ========================== */
+
+        .cube {
+
+            position: fixed;
+
+            bottom: 30px;
+            right: 30px;
+
+            width: 70px;
+            height: 70px;
+
+            background: #ffd900;
+
+            border: 6px solid #111;
+
+            box-shadow:
+                0 0 10px #ffd900,
+                0 0 25px #ffd900;
+
+            z-index: 5;
+        }
+
+
+        /* Cube eyes */
+
+        .cube::before,
+        .cube::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 12px;
+            height: 18px;
+
+            background: white;
+
+            border: 3px solid #111;
+        }
+
+
+        .cube::before {
+
+            left: 12px;
+            top: 12px;
+        }
+
+
+        .cube::after {
+
+            right: 12px;
+            top: 12px;
+        }
+
+
+        /* Cube mouth */
+
+        .cube-mouth {
+
+            position: absolute;
+
+            left: 14px;
+            right: 14px;
+
+            bottom: 12px;
+
+            height: 8px;
+
+            background: #111;
+        }
+
+
+        /* ==========================
+           RESET BUTTON
+        ========================== */
+
+        #reset {
+
+            position: fixed;
+
+            bottom: 30px;
+            left: 30px;
+
+            z-index: 5;
+
+            padding: 12px 22px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            background: #ffd900;
+
+            color: #111;
+
+            border: 4px solid #111;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 4px 0 #8d7500,
+                0 0 12px #ffd900;
+        }
+
+
+        #reset:active {
+
+            transform: translateY(4px);
+
+            box-shadow:
+                0 0 0 #8d7500;
+        }
+
+
+        /* ==========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 600px) {
+
+            #timer {
+                font-size: 15vw;
+                letter-spacing: 2px;
+            }
+
+            .cube {
+
+                width: 55px;
+                height: 55px;
+
+                bottom: 20px;
+                right: 20px;
+            }
+
+            #reset {
+
+                bottom: 20px;
+                left: 20px;
+            }
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-    <h1>GOOFYY TIMER</h1>
 
-    <h2 id="timer">00:00:00</h2>
+    <!-- TIMER -->
 
-    <button onclick="resetTimer()">
+    <div id="timer">
+        00:00:00
+    </div>
+
+
+    <!-- LITTLE GEOMETRY DASH CUBE -->
+
+    <div class="cube">
+
+        <div class="cube-mouth"></div>
+
+    </div>
+
+
+    <!-- RESET BUTTON -->
+
+    <button id="reset">
         RESET
     </button>
 
+
     <script>
+
+        /* ==========================
+           TIMER
+        ========================== */
 
         let startTime = Date.now();
 
+
         function updateTimer() {
 
-            let elapsed = Date.now() - startTime;
+            const elapsed =
+                Date.now() - startTime;
 
-            let seconds = Math.floor(elapsed / 1000);
 
-            let hours = Math.floor(seconds / 3600);
+            let totalSeconds =
+                Math.floor(elapsed / 1000);
 
-            let minutes = Math.floor((seconds % 3600) / 60);
 
-            seconds = seconds % 60;
+            const hours =
+                Math.floor(totalSeconds / 3600);
 
-            document.getElementById("timer").textContent =
-                String(hours).padStart(2, "0") + ":" +
-                String(minutes).padStart(2, "0") + ":" +
-                String(seconds).padStart(2, "0");
+
+            const minutes =
+                Math.floor(
+                    (totalSeconds % 3600) / 60
+                );
+
+
+            const seconds =
+                totalSeconds % 60;
+
+
+            document.getElementById("timer")
+                .textContent =
+
+                String(hours).padStart(2, "0")
+                + ":"
+                + String(minutes).padStart(2, "0")
+                + ":"
+                + String(seconds).padStart(2, "0");
+
         }
+
 
         setInterval(updateTimer, 1000);
 
-        function resetTimer() {
-            startTime = Date.now();
-        }
 
         updateTimer();
+
+
+        /* ==========================
+           RESET
+        ========================== */
+
+        document
+            .getElementById("reset")
+            .addEventListener("click", function() {
+
+                startTime = Date.now();
+
+                updateTimer();
+
+            });
 
     </script>
 
 </body>
 </html>
-
