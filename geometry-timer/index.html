@@ -1,1 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Goofyy Timer</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: Arial, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #071b2e,
+                    #0b3d5c,
+                    #071b2e
+                );
+
+            color: white;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            overflow: hidden;
+        }
+
+        /* Background grid */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.08) 2px,
+                    transparent 2px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.08) 2px,
+                    transparent 2px
+                );
+
+            background-size: 50px 50px;
+
+            pointer-events: none;
+        }
+
+        .timer-box {
+            position: relative;
+
+            width: min(90%, 700px);
+
+            padding: 50px 30px;
+
+            text-align: center;
+
+            background: rgba(5, 15, 30, 0.95);
+
+            border: 5px solid #32e6ff;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 0 25px #32e6ff,
+                inset 0 0 25px rgba(50, 230, 255, 0.2);
+        }
+
+        /* Geometry Dash cube */
+
+        .cube {
+            width: 65px;
+            height: 65px;
+
+            margin: 0 auto 30px;
+
+            background: #ffd900;
+
+            border: 6px solid #222;
+
+            transform: rotate(45deg);
+
+            box-shadow:
+                0 0 20px #ffd900;
+        }
+
+        h1 {
+            font-size: clamp(30px, 7vw, 60px);
+
+            margin: 15px 0;
+
+            text-shadow:
+                4px 4px 0 #111,
+                0 0 15px #32e6ff;
+        }
+
+        #timer {
+            font-family: monospace;
+
+            font-size: clamp(45px, 11vw, 90px);
+
+            font-weight: bold;
+
+            margin: 30px 0;
+
+            letter-spacing: 4px;
+
+            text-shadow:
+                5px 5px 0 #111,
+                0 0 20px #32e6ff;
+        }
+
+        button {
+            padding: 15px 35px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: #111;
+
+            background: #ffd900;
+
+            border: 4px solid #222;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 5px 0 #9b8300,
+                0 0 15px #ffd900;
+
+            transition: 0.1s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(4px);
+
+            box-shadow:
+                0 1px 0 #9b8300;
+        }
+
+        .info {
+            margin-top: 25px;
+
+            color: #aaa;
+
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="timer-box">
+
+        <div class="cube"></div>
+
+        <h1>GOOFYY TIMER</h1>
+
+        <div id="timer">
+            00:00:00
+        </div>
+
+        <button onclick="resetTimer()">
+            RESET TIMER
+        </button>
+
+        <div class="info">
+            Geometry Dash themed timer
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /*
+        ============================================
+        TIMER SETUP
+        ============================================
+        */
+
+        let startTime =
+            localStorage.getItem("goofyyTimerStart");
+
+
+        /*
+        If this is the first time opening
+        the timer, start it now.
+        */
+
+        if (!startTime) {
+
+            startTime = Date.now();
+
+            localStorage.setItem(
+                "goofyyTimerStart",
+                startTime
+            );
+
+        }
+
+
+        /*
+        ============================================
+        UPDATE TIMER
+        ============================================
+        */
+
+        function updateTimer() {
+
+            const elapsed =
+                Date.now() - Number(startTime);
+
+
+            const totalSeconds =
+                Math.floor(elapsed / 1000);
+
+
+            const hours =
+                Math.floor(totalSeconds / 3600);
+
+
+            const minutes =
+                Math.floor(
+                    (totalSeconds % 3600) / 60
+                );
+
+
+            const seconds =
+                totalSeconds % 60;
+
+
+            document.getElementById("timer")
+                .textContent =
+
+                String(hours).padStart(2, "0")
+                + ":"
+                + String(minutes).padStart(2, "0")
+                + ":"
+                + String(seconds).padStart(2, "0");
+
+        }
+
+
+        /*
+        Update the timer every 100 milliseconds.
+        */
+
+        setInterval(updateTimer, 100);
+
+
+        /*
+        Show the timer immediately.
+        */
+
+        updateTimer();
+
+
+        /*
+        ============================================
+        RESET TIMER
+        ============================================
+        */
+
+        function resetTimer() {
+
+            const confirmation =
+                confirm(
+                    "Are you sure you want to reset the timer?"
+                );
+
+
+            if (!confirmation) {
+                return;
+            }
+
+
+            startTime = Date.now();
+
+
+            localStorage.setItem(
+                "goofyyTimerStart",
+                startTime
+            );
+
+
+            updateTimer();
+
+        }
+
+    </script>
+
+</body>
+</html>
 
