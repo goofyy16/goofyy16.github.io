@@ -82,8 +82,6 @@
 
             text-align: center;
 
-            /* Geometry Dash-style outline/shadow */
-
             text-shadow:
 
                 -5px -5px 0 #111,
@@ -101,40 +99,100 @@
         ========================== */
 
         .cube {
-    position: fixed;
 
-    /* Move cube next to the timer */
-    top: 50%;
-    left: calc(50% + 190px);
+            position: fixed;
 
-    transform: translateY(-50%);
+            top: 50%;
+            left: calc(50% + 230px);
 
-    width: 70px;
-    height: 70px;
+            transform: translateY(-50%);
 
-    background: #ffd900;
+            width: 70px;
+            height: 70px;
 
-    border: 6px solid #111;
+            background: #ffd900;
 
-    box-shadow:
-        0 0 10px #ffd900,
-        0 0 25px #ffd900;
+            border: 6px solid #111;
 
-    z-index: 5;
-}
+            box-shadow:
+                0 0 10px #ffd900,
+                0 0 25px #ffd900;
+
+            z-index: 5;
+        }
+
+
+        /* Cube eyes */
+
+        .cube::before,
+        .cube::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 12px;
+            height: 18px;
+
+            background: white;
+
+            border: 3px solid #111;
+        }
+
+
+        .cube::before {
+
+            left: 12px;
+            top: 12px;
+        }
+
+
+        .cube::after {
+
+            right: 12px;
+            top: 12px;
+        }
+
+
+        /* Cube mouth */
+
+        .cube-mouth {
+
+            position: absolute;
+
+            left: 14px;
+            right: 14px;
+
+            bottom: 12px;
+
+            height: 8px;
+
+            background: #111;
+        }
+
 
         /* ==========================
-           RESET BUTTON
+           BUTTONS
         ========================== */
 
-        #reset {
+        .buttons {
 
             position: fixed;
 
             bottom: 30px;
-            left: 30px;
+            left: 50%;
 
-            z-index: 5;
+            transform: translateX(-50%);
+
+            display: flex;
+
+            gap: 15px;
+
+            z-index: 10;
+        }
+
+
+        button {
 
             padding: 12px 22px;
 
@@ -158,7 +216,13 @@
         }
 
 
-        #reset:active {
+        button:hover {
+
+            transform: translateY(-2px);
+        }
+
+
+        button:active {
 
             transform: translateY(4px);
 
@@ -171,26 +235,78 @@
            MOBILE
         ========================== */
 
-        @media (max-width: 600px) {
+        @media (max-width: 800px) {
 
             #timer {
-                font-size: 15vw;
+
+                font-size: 13vw;
+
                 letter-spacing: 2px;
             }
 
+
             .cube {
 
-                width: 55px;
-                height: 55px;
+                position: absolute;
 
-                bottom: 20px;
+                width: 50px;
+                height: 50px;
+
+                left: auto;
                 right: 20px;
+
+                top: 20px;
+
+                transform: none;
             }
 
-            #reset {
+
+            .cube::before,
+            .cube::after {
+
+                width: 8px;
+                height: 12px;
+            }
+
+
+            .cube::before {
+
+                left: 8px;
+                top: 8px;
+            }
+
+
+            .cube::after {
+
+                right: 8px;
+                top: 8px;
+            }
+
+
+            .cube-mouth {
+
+                left: 10px;
+                right: 10px;
+
+                bottom: 8px;
+
+                height: 6px;
+            }
+
+
+            .buttons {
 
                 bottom: 20px;
-                left: 20px;
+
+                gap: 8px;
+            }
+
+
+            button {
+
+                padding: 10px 16px;
+
+                font-size: 14px;
             }
         }
 
@@ -217,26 +333,59 @@
     </div>
 
 
-    <!-- RESET BUTTON -->
+    <!-- BUTTONS -->
 
-    <button id="reset">
-        RESET
-    </button>
+    <div class="buttons">
+
+        <button id="pause">
+            PAUSE
+        </button>
+
+        <button id="reset">
+            RESET
+        </button>
+
+    </div>
 
 
     <script>
 
         /* ==========================
-           TIMER
+           TIMER VARIABLES
         ========================== */
 
         let startTime = Date.now();
 
+        let pausedTime = 0;
+
+        let isPaused = false;
+
+        let pauseStarted = 0;
+
+
+        /* ==========================
+           UPDATE TIMER
+        ========================== */
 
         function updateTimer() {
 
-            const elapsed =
-                Date.now() - startTime;
+            let elapsed;
+
+
+            if (isPaused) {
+
+                elapsed =
+                    pauseStarted
+                    - startTime
+                    - pausedTime;
+
+            } else {
+
+                elapsed =
+                    Date.now()
+                    - startTime
+                    - pausedTime;
+            }
 
 
             let totalSeconds =
@@ -265,14 +414,56 @@
                 + String(minutes).padStart(2, "0")
                 + ":"
                 + String(seconds).padStart(2, "0");
-
         }
 
 
+        /* ==========================
+           RUN TIMER
+        ========================== */
+
         setInterval(updateTimer, 1000);
 
-
         updateTimer();
+
+
+        /* ==========================
+           PAUSE / RESUME
+        ========================== */
+
+        document
+            .getElementById("pause")
+            .addEventListener("click", function() {
+
+                if (!isPaused) {
+
+                    /*
+                    Pause the timer
+                    */
+
+                    isPaused = true;
+
+                    pauseStarted = Date.now();
+
+                    this.textContent = "RESUME";
+
+                } else {
+
+                    /*
+                    Resume the timer
+                    */
+
+                    pausedTime +=
+                        Date.now() - pauseStarted;
+
+                    isPaused = false;
+
+                    this.textContent = "PAUSE";
+                }
+
+
+                updateTimer();
+
+            });
 
 
         /* ==========================
@@ -285,6 +476,17 @@
 
                 startTime = Date.now();
 
+                pausedTime = 0;
+
+                isPaused = false;
+
+                pauseStarted = 0;
+
+
+                document.getElementById("pause")
+                    .textContent = "PAUSE";
+
+
                 updateTimer();
 
             });
@@ -293,3 +495,4 @@
 
 </body>
 </html>
+
