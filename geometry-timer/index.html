@@ -101,75 +101,27 @@
         ========================== */
 
         .cube {
+    position: fixed;
 
-            position: fixed;
+    /* Move cube next to the timer */
+    top: 50%;
+    left: calc(50% + 190px);
 
-            bottom: 30px;
-            right: 30px;
+    transform: translateY(-50%);
 
-            width: 70px;
-            height: 70px;
+    width: 70px;
+    height: 70px;
 
-            background: #ffd900;
+    background: #ffd900;
 
-            border: 6px solid #111;
+    border: 6px solid #111;
 
-            box-shadow:
-                0 0 10px #ffd900,
-                0 0 25px #ffd900;
+    box-shadow:
+        0 0 10px #ffd900,
+        0 0 25px #ffd900;
 
-            z-index: 5;
-        }
-
-
-        /* Cube eyes */
-
-        .cube::before,
-        .cube::after {
-
-            content: "";
-
-            position: absolute;
-
-            width: 12px;
-            height: 18px;
-
-            background: white;
-
-            border: 3px solid #111;
-        }
-
-
-        .cube::before {
-
-            left: 12px;
-            top: 12px;
-        }
-
-
-        .cube::after {
-
-            right: 12px;
-            top: 12px;
-        }
-
-
-        /* Cube mouth */
-
-        .cube-mouth {
-
-            position: absolute;
-
-            left: 14px;
-            right: 14px;
-
-            bottom: 12px;
-
-            height: 8px;
-
-            background: #111;
-        }
-
+    z-index: 5;
+}
 
         /* ==========================
            RESET BUTTON
