@@ -7,7 +7,6 @@
     <title>Death Counter</title>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -28,15 +27,10 @@
             justify-content: center;
             align-items: center;
 
-            overflow: hidden;
-
             font-family: Arial, Helvetica, sans-serif;
+
+            color: white;
         }
-
-
-        /* ==========================
-           BACKGROUND GRID
-        ========================== */
 
         body::before {
             content: "";
@@ -60,79 +54,56 @@
             pointer-events: none;
         }
 
-
-        /* ==========================
-           MAIN COUNTER
-        ========================== */
-
-        .counter-box {
-
+        .container {
             position: relative;
-
             z-index: 2;
 
             text-align: center;
 
-            padding: 40px;
+            width: min(90%, 700px);
         }
 
-
         #counter {
-
             font-family:
                 "Arial Black",
                 Impact,
                 sans-serif;
 
-            font-size: clamp(100px, 25vw, 250px);
+            font-size: clamp(60px, 14vw, 130px);
 
             font-weight: 900;
-
-            line-height: 1;
 
             color: white;
 
             text-shadow:
+                -5px -5px 0 #111,
+                 5px -5px 0 #111,
+                -5px  5px 0 #111,
+                 5px  5px 0 #111,
+                 0 0 10px #36e6ff,
+                 0 0 25px #36e6ff;
 
-                -6px -6px 0 #111,
-                 6px -6px 0 #111,
-                -6px  6px 0 #111,
-                 6px  6px 0 #111,
-
-                0 0 10px #36e6ff,
-                0 0 30px #36e6ff;
-
-            margin-bottom: 40px;
+            margin-bottom: 35px;
         }
 
-
-        /* ==========================
-           BUTTONS
-        ========================== */
-
         .buttons {
-
             display: flex;
 
             justify-content: center;
 
-            gap: 20px;
+            gap: 15px;
 
             flex-wrap: wrap;
+
+            margin-bottom: 30px;
         }
 
-
         button {
+            padding: 14px 24px;
 
-            padding: 15px 30px;
-
-            font-size: 18px;
+            font-size: 17px;
 
             font-weight: bold;
-
-            background: #ffd900;
-
-            color: #111;
 
             border: 4px solid #111;
 
@@ -140,35 +111,27 @@
 
             cursor: pointer;
 
+            background: #ffd900;
+
+            color: #111;
+
             box-shadow:
                 0 5px 0 #8d7500,
                 0 0 15px #ffd900;
-
-            transition: 0.1s;
         }
 
-
         button:hover {
-
             transform: translateY(-2px);
         }
 
-
         button:active {
-
             transform: translateY(4px);
 
             box-shadow:
                 0 0 0 #8d7500;
         }
 
-
-        /* ==========================
-           DEATH BUTTON
-        ========================== */
-
         #deathButton {
-
             background: #ff3b3b;
 
             color: white;
@@ -178,58 +141,80 @@
                 0 0 15px #ff3b3b;
         }
 
+        .twitch-box {
+            margin: 0 auto;
 
-        /* ==========================
-           RESET BUTTON
-        ========================== */
+            max-width: 450px;
 
-        #resetButton {
+            padding: 25px;
 
-            background: #ffd900;
+            background: rgba(0,0,0,0.35);
 
-            color: #111;
+            border: 3px solid #9146ff;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 0 20px rgba(145,70,255,0.5);
         }
 
+        .twitch-box h2 {
+            margin-top: 0;
 
-        /* ==========================
-           MOBILE
-        ========================== */
-
-        @media (max-width: 600px) {
-
-            #counter {
-
-                font-size: 30vw;
-            }
-
-
-            button {
-
-                padding: 12px 20px;
-
-                font-size: 15px;
-            }
-
+            font-size: 22px;
         }
 
+        input {
+            width: 100%;
+
+            padding: 13px;
+
+            margin-bottom: 12px;
+
+            font-size: 16px;
+
+            border: 3px solid #111;
+
+            border-radius: 7px;
+
+            outline: none;
+        }
+
+        #connectButton {
+            background: #9146ff;
+
+            color: white;
+
+            box-shadow:
+                0 5px 0 #54238c,
+                0 0 15px #9146ff;
+        }
+
+        #status {
+            margin-top: 15px;
+
+            font-size: 14px;
+
+            color: #aaa;
+        }
+
+        .connected {
+            color: #50fa7b !important;
+        }
+
+        .error {
+            color: #ff5555 !important;
+        }
     </style>
 </head>
 
-
 <body>
 
-
-    <div class="counter-box">
-
-
-        <!-- DEATH COUNT -->
+    <div class="container">
 
         <div id="counter">
-            0
+            Deaths = 0
         </div>
-
-
-        <!-- BUTTONS -->
 
         <div class="buttons">
 
@@ -237,114 +222,603 @@
                 💀 +1 DEATH
             </button>
 
-
             <button id="resetButton">
                 RESET
             </button>
 
         </div>
 
+        <div class="twitch-box">
+
+            <h2>Connect Twitch Chat</h2>
+
+            <input
+                id="channelInput"
+                type="text"
+                placeholder="Twitch channel name"
+                autocomplete="off"
+            >
+
+            <button id="connectButton">
+                CONNECT WITH TWITCH
+            </button>
+
+            <div id="status">
+                🔴 Not connected
+            </div>
+
+        </div>
 
     </div>
 
 
-    <script>
+<script>
 
-        /* ==========================
-           LOAD SAVED DEATH COUNT
-        ========================== */
+/* =========================================================
+   YOUR TWITCH CLIENT ID
+   ========================================================= */
 
-        let deaths =
-            Number(
-                localStorage.getItem("goofyyDeaths")
+const CLIENT_ID =
+    "ohc9gdo3a4s0g38r48lb4qb3ybims2";
+
+
+/* =========================================================
+   TWITCH SETTINGS
+   ========================================================= */
+
+const REDIRECT_URI =
+    "https://goofyy16.github.io/death-counter/";
+
+
+const SCOPES =
+    "user:read:chat";
+
+
+/* =========================================================
+   COUNTER
+   ========================================================= */
+
+let deaths =
+    Number(
+        localStorage.getItem("goofyyDeaths")
+    );
+
+
+if (isNaN(deaths)) {
+    deaths = 0;
+}
+
+
+function updateCounter() {
+
+    document.getElementById("counter")
+        .textContent =
+        "Deaths = " + deaths;
+
+}
+
+
+function addDeath() {
+
+    deaths++;
+
+    localStorage.setItem(
+        "goofyyDeaths",
+        deaths
+    );
+
+    updateCounter();
+
+}
+
+
+function resetDeaths() {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to reset the death counter?"
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    deaths = 0;
+
+    localStorage.setItem(
+        "goofyyDeaths",
+        deaths
+    );
+
+    updateCounter();
+
+}
+
+
+document
+    .getElementById("deathButton")
+    .addEventListener(
+        "click",
+        addDeath
+    );
+
+
+document
+    .getElementById("resetButton")
+    .addEventListener(
+        "click",
+        resetDeaths
+    );
+
+
+updateCounter();
+
+
+/* =========================================================
+   TWITCH LOGIN
+   ========================================================= */
+
+function loginWithTwitch(channel) {
+
+    localStorage.setItem(
+        "requestedChannel",
+        channel
+    );
+
+
+    const authURL =
+        "https://id.twitch.tv/oauth2/authorize"
+        + "?client_id="
+        + encodeURIComponent(CLIENT_ID)
+        + "&redirect_uri="
+        + encodeURIComponent(REDIRECT_URI)
+        + "&response_type=token"
+        + "&scope="
+        + encodeURIComponent(SCOPES);
+
+
+    window.location.href = authURL;
+
+}
+
+
+/* =========================================================
+   CONNECT BUTTON
+   ========================================================= */
+
+document
+    .getElementById("connectButton")
+    .addEventListener(
+        "click",
+        function() {
+
+            const channel =
+                document
+                    .getElementById("channelInput")
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+
+            if (!channel) {
+
+                setStatus(
+                    "Enter a Twitch channel first.",
+                    true
+                );
+
+                return;
+            }
+
+
+            loginWithTwitch(channel);
+
+        }
+    );
+
+
+/* =========================================================
+   READ TWITCH TOKEN FROM URL
+   ========================================================= */
+
+function getTokenFromURL() {
+
+    const hash =
+        window.location.hash.substring(1);
+
+    const params =
+        new URLSearchParams(hash);
+
+    return params.get("access_token");
+
+}
+
+
+const twitchToken =
+    getTokenFromURL();
+
+
+/* =========================================================
+   IF WE HAVE A TOKEN, CONNECT
+   ========================================================= */
+
+if (twitchToken) {
+
+    const channel =
+        localStorage.getItem(
+            "requestedChannel"
+        );
+
+
+    if (channel) {
+
+        document
+            .getElementById("channelInput")
+            .value = channel;
+
+
+        connectToTwitch(
+            twitchToken,
+            channel
+        );
+
+    }
+
+
+    /*
+    Remove token from the visible URL.
+    */
+
+    history.replaceState(
+        null,
+        "",
+        window.location.pathname
+    );
+
+}
+
+
+/* =========================================================
+   TWITCH CONNECTION
+   ========================================================= */
+
+async function connectToTwitch(
+    token,
+    channel
+) {
+
+    setStatus(
+        "🟡 Connecting to Twitch..."
+    );
+
+
+    try {
+
+        /*
+        Get the logged-in Twitch user.
+        */
+
+        const userResponse =
+            await fetch(
+                "https://api.twitch.tv/helix/users",
+                {
+                    headers: {
+                        "Client-ID": CLIENT_ID,
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
             );
 
 
-        /* Make sure the counter starts at 0 */
+        if (!userResponse.ok) {
 
-        if (isNaN(deaths)) {
-
-            deaths = 0;
-
-        }
-
-
-        /* ==========================
-           DISPLAY COUNTER
-        ========================== */
-
-        function updateCounter() {
-
-            document.getElementById("counter")
-                .textContent = "Deaths = " + deaths;
+            throw new Error(
+                "Twitch authorization failed."
+            );
 
         }
 
 
-        updateCounter();
+        const userData =
+            await userResponse.json();
 
 
-        /* ==========================
-           +1 DEATH
-        ========================== */
-
-        document
-            .getElementById("deathButton")
-            .addEventListener("click", function() {
-
-                deaths++;
+        const user =
+            userData.data[0];
 
 
-                localStorage.setItem(
-                    "goofyyDeaths",
-                    deaths
-                );
+        /*
+        Find the channel.
+        */
+
+        const channelResponse =
+            await fetch(
+                "https://api.twitch.tv/helix/users?login="
+                + encodeURIComponent(channel),
+                {
+                    headers: {
+                        "Client-ID": CLIENT_ID,
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
 
 
-                updateCounter();
+        if (!channelResponse.ok) {
 
-            });
+            throw new Error(
+                "Could not find that Twitch channel."
+            );
+
+        }
 
 
-        /* ==========================
-           RESET
-        ========================== */
+        const channelData =
+            await channelResponse.json();
 
-        document
-            .getElementById("resetButton")
-            .addEventListener("click", function() {
 
-                const confirmed =
-                    confirm(
-                        "Are you sure you want to reset the death counter?"
+        if (
+            !channelData.data ||
+            channelData.data.length === 0
+        ) {
+
+            throw new Error(
+                "Twitch channel not found."
+            );
+
+        }
+
+
+        const broadcaster =
+            channelData.data[0];
+
+
+        /*
+        Open EventSub WebSocket.
+        */
+
+        const socket =
+            new WebSocket(
+                "wss://eventsub.wss.twitch.tv/ws"
+            );
+
+
+        socket.onopen = function() {
+
+            setStatus(
+                "🟡 Connected to Twitch. Waiting for session..."
+            );
+
+        };
+
+
+        socket.onmessage =
+            async function(message) {
+
+                const data =
+                    JSON.parse(
+                        message.data
                     );
 
 
-                if (!confirmed) {
+                /*
+                Twitch welcomes us.
+                */
 
-                    return;
+                if (
+                    data.metadata
+                    .message_type
+                    === "session_welcome"
+                ) {
+
+                    const sessionID =
+                        data.payload
+                            .session
+                            .id;
+
+
+                    await subscribeToChat(
+                        sessionID,
+                        token,
+                        broadcaster.id,
+                        user.id
+                    );
 
                 }
 
 
-                deaths = 0;
+                /*
+                Twitch chat message.
+                */
+
+                if (
+                    data.metadata
+                    .message_type
+                    === "notification"
+                    &&
+                    data.metadata
+                        .subscription_type
+                    === "channel.chat.message"
+                ) {
+
+                    const chatMessage =
+                        data.payload.event
+                            .message
+                            .text
+                            .trim()
+                            .toLowerCase();
 
 
-                localStorage.setItem(
-                    "goofyyDeaths",
-                    deaths
+                    if (
+                        chatMessage === "!death"
+                    ) {
+
+                        addDeath();
+
+                    }
+
+                }
+
+            };
+
+
+        socket.onerror =
+            function() {
+
+                setStatus(
+                    "🔴 Twitch connection error.",
+                    true
                 );
 
+            };
 
-                updateCounter();
 
-            });
+        socket.onclose =
+            function() {
 
-    </script>
+                setStatus(
+                    "🔴 Twitch connection closed.",
+                    true
+                );
+
+            };
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        setStatus(
+            "🔴 " + error.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE CHAT SUBSCRIPTION
+   ========================================================= */
+
+async function subscribeToChat(
+    sessionID,
+    token,
+    broadcasterID,
+    userID
+) {
+
+    const response =
+        await fetch(
+            "https://api.twitch.tv/helix/eventsub/subscriptions",
+            {
+                method: "POST",
+
+                headers: {
+
+                    "Client-ID":
+                        CLIENT_ID,
+
+                    "Authorization":
+                        "Bearer " + token,
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    type:
+                        "channel.chat.message",
+
+                    version:
+                        "1",
+
+                    condition: {
+
+                        broadcaster_user_id:
+                            broadcasterID,
+
+                        user_id:
+                            userID
+
+                    },
+
+                    transport: {
+
+                        method:
+                            "websocket",
+
+                        session_id:
+                            sessionID
+
+                    }
+
+                })
+
+            }
+        );
+
+
+    if (!response.ok) {
+
+        const errorText =
+            await response.text();
+
+        console.error(
+            errorText
+        );
+
+        setStatus(
+            "🔴 Twitch could not start chat listening.",
+            true
+        );
+
+        return;
+    }
+
+
+    setStatus(
+        "🟢 Listening for !death in " +
+        localStorage.getItem("requestedChannel") +
+        " chat"
+    );
+
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+function setStatus(
+    message,
+    error = false
+) {
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    status.textContent =
+        message;
+
+
+    status.className =
+        error
+            ? "error"
+            : "connected";
+
+}
+
+</script>
 
 </body>
 </html>
-
-
-
-
