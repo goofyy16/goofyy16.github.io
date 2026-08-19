@@ -37,7 +37,6 @@
             content: "";
 
             position: fixed;
-
             inset: 0;
 
             background-image:
@@ -58,14 +57,27 @@
 
 
         /* ==========================
-           TIMER
+           TIMER + CUBE
         ========================== */
 
-        #timer {
+        .timer-area {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 18px;
 
             position: relative;
 
             z-index: 2;
+
+            max-width: 95vw;
+        }
+
+
+        #timer {
 
             font-family:
                 "Arial Black",
@@ -78,7 +90,9 @@
 
             letter-spacing: 6px;
 
-            color: #ffffff;
+            color: white;
+
+            white-space: nowrap;
 
             text-align: center;
 
@@ -95,17 +109,12 @@
 
 
         /* ==========================
-           LITTLE CUBE
+           GEOMETRY DASH CUBE
         ========================== */
 
         .cube {
 
-            position: fixed;
-
-            top: 50%;
-            left: calc(50% + 230px);
-
-            transform: translateY(-50%);
+            flex-shrink: 0;
 
             width: 70px;
             height: 70px;
@@ -117,8 +126,6 @@
             box-shadow:
                 0 0 10px #ffd900,
                 0 0 25px #ffd900;
-
-            z-index: 5;
         }
 
 
@@ -142,15 +149,15 @@
 
         .cube::before {
 
-            left: 12px;
-            top: 12px;
+            margin-left: 12px;
+            margin-top: 12px;
         }
 
 
         .cube::after {
 
-            right: 12px;
-            top: 12px;
+            margin-left: 40px;
+            margin-top: 12px;
         }
 
 
@@ -180,6 +187,7 @@
             position: fixed;
 
             bottom: 30px;
+
             left: 50%;
 
             transform: translateX(-50%);
@@ -237,9 +245,15 @@
 
         @media (max-width: 800px) {
 
+            .timer-area {
+
+                gap: 10px;
+            }
+
+
             #timer {
 
-                font-size: 13vw;
+                font-size: 12vw;
 
                 letter-spacing: 2px;
             }
@@ -247,50 +261,10 @@
 
             .cube {
 
-                position: absolute;
-
                 width: 50px;
                 height: 50px;
 
-                left: auto;
-                right: 20px;
-
-                top: 20px;
-
-                transform: none;
-            }
-
-
-            .cube::before,
-            .cube::after {
-
-                width: 8px;
-                height: 12px;
-            }
-
-
-            .cube::before {
-
-                left: 8px;
-                top: 8px;
-            }
-
-
-            .cube::after {
-
-                right: 8px;
-                top: 8px;
-            }
-
-
-            .cube-mouth {
-
-                left: 10px;
-                right: 10px;
-
-                bottom: 8px;
-
-                height: 6px;
+                border-width: 4px;
             }
 
 
@@ -317,18 +291,19 @@
 <body>
 
 
-    <!-- TIMER -->
+    <!-- TIMER + CUBE -->
 
-    <div id="timer">
-        00:00:00
-    </div>
+    <div class="timer-area">
 
+        <div id="timer">
+            00:00:00
+        </div>
 
-    <!-- LITTLE GEOMETRY DASH CUBE -->
+        <div class="cube">
 
-    <div class="cube">
+            <div class="cube-mouth"></div>
 
-        <div class="cube-mouth"></div>
+        </div>
 
     </div>
 
@@ -414,12 +389,9 @@
                 + String(minutes).padStart(2, "0")
                 + ":"
                 + String(seconds).padStart(2, "0");
+
         }
 
-
-        /* ==========================
-           RUN TIMER
-        ========================== */
 
         setInterval(updateTimer, 1000);
 
@@ -436,10 +408,6 @@
 
                 if (!isPaused) {
 
-                    /*
-                    Pause the timer
-                    */
-
                     isPaused = true;
 
                     pauseStarted = Date.now();
@@ -447,10 +415,6 @@
                     this.textContent = "RESUME";
 
                 } else {
-
-                    /*
-                    Resume the timer
-                    */
 
                     pausedTime +=
                         Date.now() - pauseStarted;
@@ -495,4 +459,5 @@
 
 </body>
 </html>
+
 
