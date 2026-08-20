@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Death Counter</title>
+    <title>Goofyy Death Counter</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -15,78 +16,104 @@
             margin: 0;
             min-height: 100vh;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #071b2e,
-                    #0b4261,
-                    #071b2e
-                );
+            /* GREEN SCREEN */
+            background: #00ff00;
 
             display: flex;
             justify-content: center;
             align-items: center;
 
+            overflow: hidden;
+
             font-family: Arial, Helvetica, sans-serif;
-
-            color: white;
         }
 
-        body::before {
-            content: "";
 
-            position: fixed;
-            inset: 0;
-
-            background-image:
-                linear-gradient(
-                    rgba(255,255,255,0.07) 2px,
-                    transparent 2px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(255,255,255,0.07) 2px,
-                    transparent 2px
-                );
-
-            background-size: 50px 50px;
-
-            pointer-events: none;
-        }
+        /* ==========================
+           MAIN AREA
+        ========================== */
 
         .container {
             position: relative;
+
             z-index: 2;
+
+            width: 100%;
 
             text-align: center;
 
-            width: min(90%, 700px);
+            padding: 20px;
         }
 
+
+        /* ==========================
+           DEATH COUNTER
+        ========================== */
+
         #counter {
+
             font-family:
                 "Arial Black",
                 Impact,
                 sans-serif;
 
-            font-size: clamp(60px, 14vw, 130px);
+            /*
+            Keeps Deaths = 0 on ONE line
+            */
+
+            font-size: clamp(45px, 9vw, 110px);
 
             font-weight: 900;
 
             color: white;
 
+            white-space: nowrap;
+
+            text-align: center;
+
+            margin-bottom: 35px;
+
             text-shadow:
+
                 -5px -5px 0 #111,
                  5px -5px 0 #111,
                 -5px  5px 0 #111,
                  5px  5px 0 #111,
-                 0 0 10px #36e6ff,
-                 0 0 25px #36e6ff;
 
-            margin-bottom: 35px;
+                0 0 8px #36e6ff,
+                0 0 20px #36e6ff;
         }
 
+
+        /* ==========================
+           MADE BY
+        ========================== */
+
+        .made-by {
+
+            margin-bottom: 10px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: white;
+
+            text-shadow:
+
+                -2px -2px 0 #111,
+                 2px -2px 0 #111,
+                -2px  2px 0 #111,
+                 2px  2px 0 #111;
+        }
+
+
+        /* ==========================
+           BUTTONS
+        ========================== */
+
         .buttons {
+
             display: flex;
 
             justify-content: center;
@@ -98,76 +125,114 @@
             margin-bottom: 30px;
         }
 
-        button {
-            padding: 14px 24px;
 
-            font-size: 17px;
+        button {
+
+            padding: 12px 22px;
+
+            font-size: 16px;
 
             font-weight: bold;
-
-            border: 4px solid #111;
-
-            border-radius: 8px;
-
-            cursor: pointer;
 
             background: #ffd900;
 
             color: #111;
 
+            border: 4px solid #111;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
             box-shadow:
-                0 5px 0 #8d7500,
-                0 0 15px #ffd900;
+
+                0 4px 0 #8d7500,
+
+                0 0 12px #ffd900;
         }
 
+
         button:hover {
+
             transform: translateY(-2px);
         }
 
+
         button:active {
+
             transform: translateY(4px);
 
             box-shadow:
+
                 0 0 0 #8d7500;
         }
 
+
+        /* ==========================
+           DEATH BUTTON
+        ========================== */
+
         #deathButton {
+
             background: #ff3b3b;
 
             color: white;
 
             box-shadow:
-                0 5px 0 #8f1717,
-                0 0 15px #ff3b3b;
+
+                0 4px 0 #8f1717,
+
+                0 0 12px #ff3b3b;
         }
 
+
+        /* ==========================
+           TWITCH BOX
+        ========================== */
+
         .twitch-box {
+
             margin: 0 auto;
 
-            max-width: 450px;
+            width: min(450px, 90vw);
 
-            padding: 25px;
+            padding: 20px;
 
-            background: rgba(0,0,0,0.35);
+            background: rgba(0, 0, 0, 0.35);
 
             border: 3px solid #9146ff;
 
             border-radius: 12px;
 
             box-shadow:
+
                 0 0 20px rgba(145,70,255,0.5);
         }
 
+
         .twitch-box h2 {
+
             margin-top: 0;
 
-            font-size: 22px;
+            font-size: 20px;
+
+            color: white;
+
+            text-shadow:
+
+                2px 2px 0 #111;
         }
 
+
+        /* ==========================
+           CHANNEL INPUT
+        ========================== */
+
         input {
+
             width: 100%;
 
-            padding: 13px;
+            padding: 12px;
 
             margin-bottom: 12px;
 
@@ -180,61 +245,138 @@
             outline: none;
         }
 
+
+        /* ==========================
+           CONNECT BUTTON
+        ========================== */
+
         #connectButton {
+
             background: #9146ff;
 
             color: white;
 
             box-shadow:
-                0 5px 0 #54238c,
-                0 0 15px #9146ff;
+
+                0 4px 0 #54238c,
+
+                0 0 12px #9146ff;
         }
 
+
+        /* ==========================
+           STATUS
+        ========================== */
+
         #status {
+
             margin-top: 15px;
 
             font-size: 14px;
 
-            color: #aaa;
+            color: white;
+
+            text-shadow:
+
+                1px 1px 0 #111;
         }
 
+
         .connected {
+
             color: #50fa7b !important;
         }
 
+
         .error {
+
             color: #ff5555 !important;
         }
+
+
+        /* ==========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 600px) {
+
+            #counter {
+
+                font-size: 11vw;
+
+                letter-spacing: 0;
+            }
+
+
+            .made-by {
+
+                font-size: 13px;
+            }
+
+
+            .buttons {
+
+                gap: 8px;
+            }
+
+
+            button {
+
+                padding: 10px 16px;
+
+                font-size: 14px;
+            }
+
+        }
+
     </style>
 </head>
 
+
 <body>
 
+
     <div class="container">
+
+
+        <!-- DEATH COUNTER -->
 
         <div id="counter">
             Deaths = 0
         </div>
 
+
+        <!-- MADE BY -->
+
         <div class="made-by">
-    made by Goofyy
-</div>
+            made by Goofyy
+        </div>
 
-<div class="buttons">
 
-    <button id="deathButton">
-        💀 +1 DEATH
-    </button>
+        <!-- BUTTONS -->
 
-    <button id="resetButton">
-        RESET
-    </button>
+        <div class="buttons">
 
-</div>
+            <button id="deathButton">
+                💀 +1 DEATH
+            </button>
+
+
+            <button id="resetButton">
+                RESET
+            </button>
+
+        </div>
+
+
+        <!-- TWITCH CONNECTION -->
 
         <div class="twitch-box">
 
-            <h2>Connect Twitch Chat</h2>
+            <h2>
+                Connect Twitch Chat
+            </h2>
+
 
             <input
                 id="channelInput"
@@ -243,9 +385,11 @@
                 autocomplete="off"
             >
 
+
             <button id="connectButton">
                 CONNECT WITH TWITCH
             </button>
+
 
             <div id="status">
                 🔴 Not connected
@@ -253,13 +397,15 @@
 
         </div>
 
+
     </div>
 
 
 <script>
 
+
 /* =========================================================
-   YOUR TWITCH CLIENT ID
+   TWITCH CLIENT ID
    ========================================================= */
 
 const CLIENT_ID =
@@ -279,7 +425,7 @@ const SCOPES =
 
 
 /* =========================================================
-   COUNTER
+   DEATH COUNTER
    ========================================================= */
 
 let deaths =
@@ -289,50 +435,43 @@ let deaths =
 
 
 if (isNaN(deaths)) {
+
     deaths = 0;
+
 }
 
 
+/* =========================================================
+   UPDATE COUNTER
+   ========================================================= */
+
 function updateCounter() {
 
-    document.getElementById("counter")
+    document
+        .getElementById("counter")
         .textContent =
         "Deaths = " + deaths;
 
 }
 
 
+updateCounter();
+
+
+/* =========================================================
+   ADD DEATH
+   ========================================================= */
+
 function addDeath() {
 
     deaths++;
 
-    localStorage.setItem(
-        "goofyyDeaths",
-        deaths
-    );
-
-    updateCounter();
-
-}
-
-
-function resetDeaths() {
-
-    const confirmed =
-        confirm(
-            "Are you sure you want to reset the death counter?"
-        );
-
-    if (!confirmed) {
-        return;
-    }
-
-    deaths = 0;
 
     localStorage.setItem(
         "goofyyDeaths",
         deaths
     );
+
 
     updateCounter();
 
@@ -347,15 +486,45 @@ document
     );
 
 
+/* =========================================================
+   RESET
+   ========================================================= */
+
+function resetDeaths() {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to reset the death counter?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    deaths = 0;
+
+
+    localStorage.setItem(
+        "goofyyDeaths",
+        deaths
+    );
+
+
+    updateCounter();
+
+}
+
+
 document
     .getElementById("resetButton")
     .addEventListener(
         "click",
         resetDeaths
     );
-
-
-updateCounter();
 
 
 /* =========================================================
@@ -381,7 +550,8 @@ function loginWithTwitch(channel) {
         + encodeURIComponent(SCOPES);
 
 
-    window.location.href = authURL;
+    window.location.href =
+        authURL;
 
 }
 
@@ -412,17 +582,20 @@ document
                 );
 
                 return;
+
             }
 
 
-            loginWithTwitch(channel);
+            loginWithTwitch(
+                channel
+            );
 
         }
     );
 
 
 /* =========================================================
-   READ TWITCH TOKEN FROM URL
+   GET TOKEN
    ========================================================= */
 
 function getTokenFromURL() {
@@ -430,10 +603,14 @@ function getTokenFromURL() {
     const hash =
         window.location.hash.substring(1);
 
+
     const params =
         new URLSearchParams(hash);
 
-    return params.get("access_token");
+
+    return params.get(
+        "access_token"
+    );
 
 }
 
@@ -443,7 +620,7 @@ const twitchToken =
 
 
 /* =========================================================
-   IF WE HAVE A TOKEN, CONNECT
+   CONNECT IF LOGGED IN
    ========================================================= */
 
 if (twitchToken) {
@@ -458,7 +635,8 @@ if (twitchToken) {
 
         document
             .getElementById("channelInput")
-            .value = channel;
+            .value =
+            channel;
 
 
         connectToTwitch(
@@ -468,10 +646,6 @@ if (twitchToken) {
 
     }
 
-
-    /*
-    Remove token from the visible URL.
-    */
 
     history.replaceState(
         null,
@@ -498,18 +672,18 @@ async function connectToTwitch(
 
     try {
 
-        /*
-        Get the logged-in Twitch user.
-        */
-
         const userResponse =
             await fetch(
                 "https://api.twitch.tv/helix/users",
                 {
                     headers: {
-                        "Client-ID": CLIENT_ID,
+
+                        "Client-ID":
+                            CLIENT_ID,
+
                         "Authorization":
-                            "Bearer " + token
+                            "Bearer " +
+                            token
                     }
                 }
             );
@@ -532,19 +706,22 @@ async function connectToTwitch(
             userData.data[0];
 
 
-        /*
-        Find the channel.
-        */
-
         const channelResponse =
             await fetch(
                 "https://api.twitch.tv/helix/users?login="
-                + encodeURIComponent(channel),
+                +
+                encodeURIComponent(
+                    channel
+                ),
                 {
                     headers: {
-                        "Client-ID": CLIENT_ID,
+
+                        "Client-ID":
+                            CLIENT_ID,
+
                         "Authorization":
-                            "Bearer " + token
+                            "Bearer " +
+                            token
                     }
                 }
             );
@@ -579,23 +756,20 @@ async function connectToTwitch(
             channelData.data[0];
 
 
-        /*
-        Open EventSub WebSocket.
-        */
-
         const socket =
             new WebSocket(
                 "wss://eventsub.wss.twitch.tv/ws"
             );
 
 
-        socket.onopen = function() {
+        socket.onopen =
+            function() {
 
-            setStatus(
-                "🟡 Connected to Twitch. Waiting for session..."
-            );
+                setStatus(
+                    "🟡 Connected. Waiting for Twitch..."
+                );
 
-        };
+            };
 
 
         socket.onmessage =
@@ -607,14 +781,11 @@ async function connectToTwitch(
                     );
 
 
-                /*
-                Twitch welcomes us.
-                */
-
                 if (
                     data.metadata
-                    .message_type
-                    === "session_welcome"
+                        .message_type
+                    ===
+                    "session_welcome"
                 ) {
 
                     const sessionID =
@@ -633,18 +804,16 @@ async function connectToTwitch(
                 }
 
 
-                /*
-                Twitch chat message.
-                */
-
                 if (
                     data.metadata
-                    .message_type
-                    === "notification"
+                        .message_type
+                    ===
+                    "notification"
                     &&
                     data.metadata
                         .subscription_type
-                    === "channel.chat.message"
+                    ===
+                    "channel.chat.message"
                 ) {
 
                     const chatMessage =
@@ -656,7 +825,8 @@ async function connectToTwitch(
 
 
                     if (
-                        chatMessage === "!death"
+                        chatMessage ===
+                        "!death"
                     ) {
 
                         addDeath();
@@ -695,8 +865,10 @@ async function connectToTwitch(
 
         console.error(error);
 
+
         setStatus(
-            "🔴 " + error.message,
+            "🔴 " +
+            error.message,
             true
         );
 
@@ -706,7 +878,7 @@ async function connectToTwitch(
 
 
 /* =========================================================
-   CREATE CHAT SUBSCRIPTION
+   SUBSCRIBE TO CHAT
    ========================================================= */
 
 async function subscribeToChat(
@@ -720,6 +892,7 @@ async function subscribeToChat(
         await fetch(
             "https://api.twitch.tv/helix/eventsub/subscriptions",
             {
+
                 method: "POST",
 
                 headers: {
@@ -728,7 +901,8 @@ async function subscribeToChat(
                         CLIENT_ID,
 
                     "Authorization":
-                        "Bearer " + token,
+                        "Bearer " +
+                        token,
 
                     "Content-Type":
                         "application/json"
@@ -774,22 +948,28 @@ async function subscribeToChat(
         const errorText =
             await response.text();
 
+
         console.error(
             errorText
         );
+
 
         setStatus(
             "🔴 Twitch could not start chat listening.",
             true
         );
 
+
         return;
+
     }
 
 
     setStatus(
         "🟢 Listening for !death in " +
-        localStorage.getItem("requestedChannel") +
+        localStorage.getItem(
+            "requestedChannel"
+        ) +
         " chat"
     );
 
