@@ -1,1 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Goofyy Countdown Timer</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            background: #00ff00;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            overflow: hidden;
+
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+
+        /* ==========================
+           MAIN TIMER
+        ========================== */
+
+        .container {
+            width: 100%;
+
+            text-align: center;
+
+            padding: 20px;
+        }
+
+
+        /* ==========================
+           MADE BY
+        ========================== */
+
+        .made-by {
+            margin-bottom: 5px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            color: white;
+
+            text-shadow:
+                -2px -2px 0 #111,
+                 2px -2px 0 #111,
+                -2px  2px 0 #111,
+                 2px  2px 0 #111;
+        }
+
+
+        /* ==========================
+           TIMER DISPLAY
+        ========================== */
+
+        #timer {
+
+            font-family:
+                "Arial Black",
+                Impact,
+                sans-serif;
+
+            font-size: clamp(70px, 15vw, 190px);
+
+            font-weight: 900;
+
+            line-height: 1;
+
+            color: white;
+
+            white-space: nowrap;
+
+            text-shadow:
+
+                -5px -5px 0 #111,
+                 5px -5px 0 #111,
+                -5px  5px 0 #111,
+                 5px  5px 0 #111;
+        }
+
+
+        /* ==========================
+           BUTTON AREA
+        ========================== */
+
+        .buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            max-width: 900px;
+
+            margin: 30px auto 0;
+        }
+
+
+        /* ==========================
+           BUTTONS
+        ========================== */
+
+        button {
+
+            padding: 10px 16px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            background: #ffd900;
+
+            color: #111;
+
+            border: 4px solid #111;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 4px 0 #8d7500;
+        }
+
+
+        button:hover {
+
+            transform: translateY(-2px);
+        }
+
+
+        button:active {
+
+            transform: translateY(3px);
+
+            box-shadow:
+                0 0 0 #8d7500;
+        }
+
+
+        /* PAUSE */
+
+        #pauseButton {
+
+            background: #36e6ff;
+
+            box-shadow:
+                0 4px 0 #147c8c;
+        }
+
+
+        /* RESET */
+
+        #resetButton {
+
+            background: #ff3b3b;
+
+            color: white;
+
+            box-shadow:
+                0 4px 0 #8f1717;
+        }
+
+
+        /* CUSTOM */
+
+        #customButton {
+
+            background: #9146ff;
+
+            color: white;
+
+            box-shadow:
+                0 4px 0 #54238c;
+        }
+
+
+        /* ==========================
+           CUSTOM TIME POPUP
+        ========================== */
+
+        .custom-box {
+
+            display: none;
+
+            position: fixed;
+
+            left: 50%;
+
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            background: #222;
+
+            border: 5px solid #111;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            z-index: 20;
+
+            box-shadow:
+                0 0 30px rgba(0,0,0,0.7);
+        }
+
+
+        .custom-box.show {
+
+            display: block;
+        }
+
+
+        .custom-box h2 {
+
+            margin-top: 0;
+
+            color: white;
+        }
+
+
+        .custom-inputs {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .custom-inputs div {
+
+            display: flex;
+
+            flex-direction: column;
+
+            color: white;
+
+            font-weight: bold;
+
+            font-size: 13px;
+        }
+
+
+        .custom-inputs input {
+
+            width: 90px;
+
+            padding: 10px;
+
+            margin-top: 5px;
+
+            font-size: 18px;
+
+            text-align: center;
+
+            border: 3px solid #111;
+
+            border-radius: 6px;
+        }
+
+
+        .custom-buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+        }
+
+
+        #addCustom {
+
+            background: #50fa7b;
+
+            box-shadow:
+                0 4px 0 #238c42;
+        }
+
+
+        #cancelCustom {
+
+            background: #ff5555;
+
+            color: white;
+
+            box-shadow:
+                0 4px 0 #8f1717;
+        }
+
+
+        /* ==========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 700px) {
+
+            #timer {
+
+                font-size: 13vw;
+            }
+
+
+            .buttons {
+
+                gap: 7px;
+
+                margin-top: 20px;
+            }
+
+
+            button {
+
+                padding: 9px 12px;
+
+                font-size: 12px;
+            }
+
+
+            .custom-inputs input {
+
+                width: 70px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <div class="container">
+
+
+        <div class="made-by">
+            made by Goofyy
+        </div>
+
+
+        <div id="timer">
+            00:00:00
+        </div>
+
+
+        <div class="buttons">
+
+            <button id="pauseButton">
+                PAUSE
+            </button>
+
+
+            <button id="resetButton">
+                RESET
+            </button>
+
+
+            <button id="oneMinute">
+                +1 MINUTE
+            </button>
+
+
+            <button id="tenMinutes">
+                +10 MINUTES
+            </button>
+
+
+            <button id="oneHour">
+                +1 HOUR
+            </button>
+
+
+            <button id="tenHours">
+                +10 HOURS
+            </button>
+
+
+            <button id="oneDay">
+                +1 DAY
+            </button>
+
+
+            <button id="customButton">
+                + CUSTOM TIME
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- CUSTOM TIME WINDOW -->
+
+    <div class="custom-box" id="customBox">
+
+        <h2>
+            Add Custom Time
+        </h2>
+
+
+        <div class="custom-inputs">
+
+            <div>
+                Hours
+                <input
+                    id="customHours"
+                    type="number"
+                    min="0"
+                    value="0"
+                >
+            </div>
+
+
+            <div>
+                Minutes
+                <input
+                    id="customMinutes"
+                    type="number"
+                    min="0"
+                    value="0"
+                >
+            </div>
+
+
+            <div>
+                Seconds
+                <input
+                    id="customSeconds"
+                    type="number"
+                    min="0"
+                    value="0"
+                >
+            </div>
+
+        </div>
+
+
+        <div class="custom-buttons">
+
+            <button id="addCustom">
+                ADD TIME
+            </button>
+
+
+            <button id="cancelCustom">
+                CANCEL
+            </button>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+    /* ==========================
+       TIMER VARIABLES
+    ========================== */
+
+    let remainingTime = 0;
+
+    let isPaused = false;
+
+    let lastUpdate = Date.now();
+
+
+    /* ==========================
+       UPDATE DISPLAY
+    ========================== */
+
+    function updateDisplay() {
+
+        let totalSeconds =
+            Math.max(
+                0,
+                Math.ceil(
+                    remainingTime / 1000
+                )
+            );
+
+
+        const days =
+            Math.floor(
+                totalSeconds / 86400
+            );
+
+
+        const hours =
+            Math.floor(
+                (totalSeconds % 86400) / 3600
+            );
+
+
+        const minutes =
+            Math.floor(
+                (totalSeconds % 3600) / 60
+            );
+
+
+        const seconds =
+            totalSeconds % 60;
+
+
+        /*
+        If there are days,
+        show them as part of the timer.
+        */
+
+        if (days > 0) {
+
+            document.getElementById("timer")
+                .textContent =
+
+                String(days).padStart(2, "0")
+                + ":"
+                + String(hours).padStart(2, "0")
+                + ":"
+                + String(minutes).padStart(2, "0")
+                + ":"
+                + String(seconds).padStart(2, "0");
+
+        } else {
+
+            document.getElementById("timer")
+                .textContent =
+
+                String(hours).padStart(2, "0")
+                + ":"
+                + String(minutes).padStart(2, "0")
+                + ":"
+                + String(seconds).padStart(2, "0");
+
+        }
+
+    }
+
+
+    /* ==========================
+       TIMER LOOP
+    ========================== */
+
+    function timerLoop() {
+
+        const now = Date.now();
+
+        const difference =
+            now - lastUpdate;
+
+
+        lastUpdate = now;
+
+
+        if (!isPaused && remainingTime > 0) {
+
+            remainingTime -= difference;
+
+
+            if (remainingTime <= 0) {
+
+                remainingTime = 0;
+
+            }
+
+        }
+
+
+        updateDisplay();
+
+
+        requestAnimationFrame(
+            timerLoop
+        );
+
+    }
+
+
+    timerLoop();
+
+
+    /* ==========================
+       ADD TIME
+    ========================== */
+
+    function addTime(seconds) {
+
+        remainingTime +=
+            seconds * 1000;
+
+        updateDisplay();
+
+    }
+
+
+    /* +1 MINUTE */
+
+    document
+        .getElementById("oneMinute")
+        .addEventListener(
+            "click",
+            function() {
+
+                addTime(60);
+
+            }
+        );
+
+
+    /* +10 MINUTES */
+
+    document
+        .getElementById("tenMinutes")
+        .addEventListener(
+            "click",
+            function() {
+
+                addTime(600);
+
+            }
+        );
+
+
+    /* +1 HOUR */
+
+    document
+        .getElementById("oneHour")
+        .addEventListener(
+            "click",
+            function() {
+
+                addTime(3600);
+
+            }
+        );
+
+
+    /* +10 HOURS */
+
+    document
+        .getElementById("tenHours")
+        .addEventListener(
+            "click",
+            function() {
+
+                addTime(36000);
+
+            }
+        );
+
+
+    /* +1 DAY */
+
+    document
+        .getElementById("oneDay")
+        .addEventListener(
+            "click",
+            function() {
+
+                addTime(86400);
+
+            }
+        );
+
+
+    /* ==========================
+       PAUSE / RESUME
+    ========================== */
+
+    document
+        .getElementById("pauseButton")
+        .addEventListener(
+            "click",
+            function() {
+
+                isPaused =
+                    !isPaused;
+
+
+                if (isPaused) {
+
+                    this.textContent =
+                        "RESUME";
+
+                } else {
+
+                    this.textContent =
+                        "PAUSE";
+
+                }
+
+
+                lastUpdate =
+                    Date.now();
+
+            }
+        );
+
+
+    /* ==========================
+       RESET
+    ========================== */
+
+    document
+        .getElementById("resetButton")
+        .addEventListener(
+            "click",
+            function() {
+
+                remainingTime = 0;
+
+                isPaused = false;
+
+                lastUpdate =
+                    Date.now();
+
+
+                document
+                    .getElementById(
+                        "pauseButton"
+                    )
+                    .textContent =
+                    "PAUSE";
+
+
+                updateDisplay();
+
+            }
+        );
+
+
+    /* ==========================
+       CUSTOM TIME WINDOW
+    ========================== */
+
+    const customBox =
+        document.getElementById(
+            "customBox"
+        );
+
+
+    document
+        .getElementById("customButton")
+        .addEventListener(
+            "click",
+            function() {
+
+                customBox
+                    .classList
+                    .add("show");
+
+            }
+        );
+
+
+    /* ==========================
+       ADD CUSTOM TIME
+    ========================== */
+
+    document
+        .getElementById("addCustom")
+        .addEventListener(
+            "click",
+            function() {
+
+                const hours =
+                    Number(
+                        document
+                            .getElementById(
+                                "customHours"
+                            )
+                            .value
+                    );
+
+
+                const minutes =
+                    Number(
+                        document
+                            .getElementById(
+                                "customMinutes"
+                            )
+                            .value
+                    );
+
+
+                const seconds =
+                    Number(
+                        document
+                            .getElementById(
+                                "customSeconds"
+                            )
+                            .value
+                    );
+
+
+                const totalSeconds =
+
+                    (hours * 3600)
+                    +
+                    (minutes * 60)
+                    +
+                    seconds;
+
+
+                if (
+                    totalSeconds <= 0
+                ) {
+
+                    alert(
+                        "Enter some time first!"
+                    );
+
+                    return;
+
+                }
+
+
+                addTime(
+                    totalSeconds
+                );
+
+
+                customBox
+                    .classList
+                    .remove("show");
+
+
+                /*
+                Clear inputs
+                */
+
+                document
+                    .getElementById(
+                        "customHours"
+                    )
+                    .value = 0;
+
+
+                document
+                    .getElementById(
+                        "customMinutes"
+                    )
+                    .value = 0;
+
+
+                document
+                    .getElementById(
+                        "customSeconds"
+                    )
+                    .value = 0;
+
+            }
+        );
+
+
+    /* ==========================
+       CANCEL CUSTOM TIME
+    ========================== */
+
+    document
+        .getElementById("cancelCustom")
+        .addEventListener(
+            "click",
+            function() {
+
+                customBox
+                    .classList
+                    .remove("show");
+
+            }
+        );
+
+</script>
+
+</body>
+</html>
