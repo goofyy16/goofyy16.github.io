@@ -1,1 +1,204 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Scoreboard</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: white;
+  min-height: 100vh;
+  padding: 35px 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #aaa;
+  margin-bottom: 35px;
+}
+
+.scoreboard {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 22px;
+}
+
+.team {
+  background: #1c1c1c;
+  border: 2px solid var(--team-color);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.team-header {
+  background: var(--team-color);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.team-header h2 {
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+.score {
+  font-size: 55px;
+  font-weight: bold;
+}
+
+.players {
+  padding: 22px;
+}
+
+.player-count {
+  color: #aaa;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.player {
+  background: #292929;
+  padding: 12px;
+  margin-bottom: 9px;
+  border-radius: 7px;
+  text-align: center;
+}
+
+@media(max-width: 600px) {
+  h1 {
+    font-size: 32px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<h1>TEAM SCOREBOARD</h1>
+<p class="subtitle">Team standings and player rosters</p>
+
+<div class="scoreboard" id="scoreboard"></div>
+
+<script>
+
+// ==========================================
+//        TEAM SCOREBOARD SETTINGS
+//        EDIT YOUR TEAMS BELOW!
+// ==========================================
+
+const teams = [
+ {
+    name: "Team Black",
+    color: "#000000",
+    score: 0,
+    players: [
+      "Jason",
+      "Luke",
+    ]
+  },
+  
+  {
+    name: "Team Orange",
+    color: "#FFA500",
+    score: 0,
+    players: [
+      "Alex",
+      "Mathhew",
+    ]
+  },
+
+  {
+    name: "Team Red",
+    color: "#FF0000",
+    score: 0,
+    players: [
+      "TBD",
+      "TBD",
+    ]
+  },
+
+  {
+    name: "Team Purple",
+    color: "#800080",
+    score: 0,
+    players: [
+      "TBD",
+      "TBD"
+    ]
+  }
+
+];
+
+// ==========================================
+//        END OF SETTINGS
+//   DO NOT EDIT BELOW THIS LINE
+// ==========================================
+
+const scoreboard = document.getElementById("scoreboard");
+
+teams.forEach(team => {
+
+  const teamCard = document.createElement("div");
+  teamCard.className = "team";
+  teamCard.style.setProperty("--team-color", team.color);
+
+  const header = document.createElement("div");
+  header.className = "team-header";
+
+  const teamName = document.createElement("h2");
+  teamName.textContent = team.name;
+
+  const score = document.createElement("div");
+  score.className = "score";
+  score.textContent = team.score;
+
+  header.appendChild(teamName);
+  header.appendChild(score);
+
+  const playersSection = document.createElement("div");
+  playersSection.className = "players";
+
+  const count = document.createElement("div");
+  count.className = "player-count";
+  count.textContent = team.players.length + " PLAYERS";
+
+  playersSection.appendChild(count);
+
+  team.players.forEach(playerName => {
+    const player = document.createElement("div");
+    player.className = "player";
+    player.textContent = playerName;
+    playersSection.appendChild(player);
+  });
+
+  teamCard.appendChild(header);
+  teamCard.appendChild(playersSection);
+
+  scoreboard.appendChild(teamCard);
+
+});
+
+</script>
+
+</body>
+</html>
+
