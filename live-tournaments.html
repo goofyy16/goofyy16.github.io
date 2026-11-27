@@ -282,11 +282,35 @@ let personalMode = false;
 let displayedTeams = structuredClone(officialTeams);
 
 let countdownRemaining =
-  countdownHours * 3600 +
-  countdownMinutes * 60 +
-  countdownSeconds;
 
-let countdownEnd = Date.now() + countdownRemaining * 1000;
+// ==========================================
+//       UNIVERSAL TOURNAMENT COUNTDOWN
+// ==========================================
+
+// Set the exact date and time the countdown ends.
+// Format: YYYY-MM-DDTHH:MM:SS-04:00
+// Example below: December 1, 2026 at 8 PM Eastern.
+
+const countdownDeadline = "2026-11-28T18:00:00-05:00";
+
+const countdownEnd = new Date(countdownDeadline).getTime();
+function updateCountdown() {
+  const remaining = Math.max(
+    0,
+    Math.floor((countdownEnd - Date.now()) / 1000)
+  );
+
+  const days = Math.floor(remaining / 86400);
+  const hours = Math.floor((remaining % 86400) / 3600);
+  const minutes = Math.floor((remaining % 3600) / 60);
+  const seconds = remaining % 60;
+
+  document.getElementById("countdown").textContent =
+    days + "d " +
+    String(hours).padStart(2,"0") + ":" +
+    String(minutes).padStart(2,"0") + ":" +
+    String(seconds).padStart(2,"0");
+}
 
 function renderScoreboard() {
   const scoreboard = document.getElementById("scoreboard");
