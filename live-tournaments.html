@@ -4,221 +4,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐐Tournament 1 Countdown🐐</title>
-
+<title>🐐 Tournament 1 Countdown 🐐</title>
 <style>
-* { box-sizing:border-box; margin:0; padding:0; }
-
-body {
-  font-family:Arial,sans-serif;
-  background:#111;
-  color:white;
-  min-height:100vh;
-  padding:35px 20px;
-}
-
-h1 {
-  text-align:center;
-  font-size:42px;
-  margin-bottom:10px;
-}
-
-.subtitle {
-  text-align:center;
-  color:#aaa;
-  margin-bottom:35px;
-}
-
-.top-bar {
-  max-width:1100px;
-  margin:0 auto 25px;
-  display:flex;
-  justify-content:flex-end;
-}
-
-button {
-  cursor:pointer;
-  border:0;
-  border-radius:8px;
-  padding:11px 17px;
-  font-size:14px;
-  font-weight:bold;
-}
-
-#customizeButton {
-  background:#fff;
-  color:#111;
-}
-
-.scoreboard {
-  max-width:1100px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:22px;
-}
-
-.team {
-  background:#1c1c1c;
-  border:2px solid var(--team-color);
-  border-radius:14px;
-  overflow:hidden;
-}
-
-.team-header {
-  background:var(--team-color);
-  color:white;
-  padding:20px;
-  text-align:center;
-}
-
-.team-header h2 {
-  font-size:26px;
-  margin-bottom:8px;
-}
-
-.score {
-  font-size:55px;
-  font-weight:bold;
-}
-
-.players { padding:22px; }
-
-.player-count {
-  color:#aaa;
-  font-size:14px;
-  margin-bottom:15px;
-}
-
-.player {
-  background:#292929;
-  padding:12px;
-  margin-bottom:9px;
-  border-radius:7px;
-  text-align:center;
-}
-
-.game-info {
-  max-width:1100px;
-  margin:30px auto;
-  text-align:center;
-  background:#1c1c1c;
-  border:1px solid #333;
-  border-radius:12px;
-  padding:25px;
-}
-
-.game-number {
-  font-size:25px;
-  font-weight:bold;
-  margin-bottom:15px;
-}
-
-.countdown {
-  font-size:42px;
-  font-weight:bold;
-  font-variant-numeric:tabular-nums;
-}
-
-.countdown-label {
-  color:#aaa;
-  font-size:14px;
-  margin-bottom:8px;
-}
-
-#customizePanel {
-  display:none;
-  max-width:1100px;
-  margin:25px auto;
-  padding:25px;
-  background:#1c1c1c;
-  border:1px solid #444;
-  border-radius:12px;
-}
-
-#customizePanel h2 {
-  margin-bottom:20px;
-}
-
-.editor-team {
-  border:1px solid #444;
-  border-radius:10px;
-  padding:16px;
-  margin-bottom:15px;
-}
-
-.editor-team input {
-  width:100%;
-  padding:10px;
-  margin:5px 0 12px;
-  background:#292929;
-  border:1px solid #555;
-  border-radius:6px;
-  color:white;
-}
-
-.editor-team label {
-  font-size:13px;
-  color:#bbb;
-}
-
-.editor-team input[type="color"] {
-  height:42px;
-  padding:3px;
-}
-
-.editor-actions {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:15px;
-}
-
-.primary {
-  background:white;
-  color:#111;
-}
-
-.secondary {
-  background:#333;
-  color:white;
-}
-
-.danger {
-  background:#8d2525;
-  color:white;
-}
-
-@media(max-width:600px) {
-  h1 { font-size:32px; }
-  .countdown { font-size:34px; }
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#111;color:white;min-height:100vh;padding:35px 20px}
+h1{text-align:center;font-size:42px;margin-bottom:10px}
+.subtitle{text-align:center;color:#aaa;margin-bottom:35px}
+.top-bar{max-width:1100px;margin:0 auto 25px;display:flex;justify-content:flex-end}
+button{cursor:pointer;border:0;border-radius:8px;padding:11px 17px;font-size:14px;font-weight:bold}
+#customizeButton{background:#fff;color:#111}
+.scoreboard{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.team{background:#1c1c1c;border:2px solid var(--team-color);border-radius:14px;overflow:hidden}
+.team-header{background:var(--team-color);color:white;padding:20px;text-align:center}
+.team-header h2{font-size:26px;margin-bottom:8px}
+.score{font-size:55px;font-weight:bold}
+.players{padding:22px}
+.player-count{color:#aaa;font-size:14px;margin-bottom:15px}
+.player{background:#292929;padding:12px;margin-bottom:9px;border-radius:7px;text-align:center}
+.game-info{max-width:1100px;margin:30px auto;text-align:center;background:#1c1c1c;border:1px solid #333;border-radius:12px;padding:25px}
+.game-number{font-size:25px;font-weight:bold;margin-bottom:15px}
+.countdown{font-size:42px;font-weight:bold;font-variant-numeric:tabular-nums}
+.countdown-label{color:#aaa;font-size:14px;margin-bottom:8px}
+#customizePanel{display:none;max-width:1100px;margin:25px auto;padding:25px;background:#1c1c1c;border:1px solid #444;border-radius:12px}
+#customizePanel h2{margin-bottom:20px}
+.editor-team{border:1px solid #444;border-radius:10px;padding:16px;margin-bottom:15px}
+.editor-team input{width:100%;padding:10px;margin:5px 0 12px;background:#292929;border:1px solid #555;border-radius:6px;color:white}
+.editor-team label{display:block;font-size:13px;color:#bbb}
+.editor-team input[type=color]{height:42px;padding:3px}
+.editor-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px}
+.primary{background:white;color:#111}
+.secondary{background:#333;color:white}
+.danger{background:#8d2525;color:white}
+@media(max-width:600px){h1{font-size:32px}.countdown{font-size:34px}}
 </style>
 </head>
-
 <body>
 
 <h1>TOURNAMENT 1</h1>
 <p class="subtitle">Go Goated | 5 Game | Point Based | Tournament</p>
 
 <div class="top-bar">
-  <button id="customizeButton" onclick="toggleCustomize()">
-    Customize My Scoreboard
-  </button>
+<button id="customizeButton" type="button" onclick="toggleCustomize()">Customize My Scoreboard</button>
 </div>
 
 <div id="customizePanel">
   <h2>Customize Your Scoreboard</h2>
-  <p style="color:#aaa;margin-bottom:20px">
-    These changes only affect your personal scoreboard in this browser.
-  </p>
-
+  <p style="color:#aaa;margin-bottom:20px">These changes only affect your personal scoreboard in this browser.</p>
   <div id="teamEditor"></div>
-
   <div class="editor-actions">
-    <button class="secondary" onclick="addTeam()">+ Add Team</button>
-    <button class="primary" onclick="saveCustomization()">Save Changes</button>
-    <button class="secondary" onclick="resetCustomization()">Reset to Official</button>
+    <button class="secondary" type="button" onclick="addTeam()">+ Add Team</button>
+    <button class="primary" type="button" onclick="saveCustomization()">Save Changes</button>
+    <button class="secondary" type="button" onclick="resetCustomization()">Reset to Official</button>
   </div>
 </div>
 
@@ -227,126 +63,72 @@ button {
 <div class="game-info">
   <div class="game-number" id="gameNumber"></div>
   <div class="countdown-label">TIME REMAINING</div>
-  <div class="countdown" id="countdown">00:00:00</div>
+  <div class="countdown" id="countdown">Loading...</div>
 </div>
 
 <script>
-
 // ==========================================
-//          OFFICIAL SCOREBOARD SETTINGS
-//          ONLY EDIT THIS SECTION
+// OFFICIAL SCOREBOARD SETTINGS - EDIT HERE
 // ==========================================
 
 const officialTeams = [
-  {
-    name:"Team Black",
-    color:"#000000",
-    score:0,
-    players:["Jason","Luke"]
-  },
-  {
-    name:"Team Orange",
-    color:"#FFA500",
-    score:0,
-    players:["Alex","Matthew"]
-  },
-  {
-    name:"Team Red",
-    color:"#FF0000",
-    score:0,
-    players:["Andrew","Nate"]
-  },
-  {
-    name:"Team Purple",
-    color:"#800080",
-    score:0,
-    players:["Cullen","Isaac"]
-  }
+  {name:"Team Black",color:"#000000",score:0,players:["Jason","Luke"]},
+  {name:"Team Orange",color:"#FFA500",score:0,players:["Alex","Matthew"]},
+  {name:"Team Red",color:"#FF0000",score:0,players:["Andrew","Nate"]},
+  {name:"Team Purple",color:"#800080",score:0,players:["Cullen","Isaac"]}
 ];
 
-// GAME NUMBER: CHANGE THIS NUMBER
+// Change the game number here.
 const startingGame = 0;
 
-// COUNTDOWN DURATION: CHANGE THESE NUMBERS
-const countdownHours = 31;
-const countdownMinutes = 14;
-const countdownSeconds = 0;
+// UNIVERSAL COUNTDOWN DEADLINE:
+// Format: YYYY-MM-DDTHH:MM:SS-05:00 (Eastern Standard Time)
+// Use -04:00 during Eastern Daylight Time.
+const countdownDeadline = "2026-11-28T18:00:00-05:00";
 
 // ==========================================
-//             END OF SETTINGS
+// DO NOT EDIT BELOW THIS LINE
 // ==========================================
 
 const STORAGE_KEY = "goofyyPersonalScoreboard";
-
-let personalMode = false;
-let displayedTeams = structuredClone(officialTeams);
-
-let countdownRemaining =
-
-// ==========================================
-//       UNIVERSAL TOURNAMENT COUNTDOWN
-// ==========================================
-
-// Set the exact date and time the countdown ends.
-// Format: YYYY-MM-DDTHH:MM:SS-04:00
-// Example below: December 1, 2026 at 8 PM Eastern.
-
-const countdownDeadline = "2026-11-28T18:00:00-05:00";
-
 const countdownEnd = new Date(countdownDeadline).getTime();
-function updateCountdown() {
-  const remaining = Math.max(
-    0,
-    Math.floor((countdownEnd - Date.now()) / 1000)
-  );
+let displayedTeams = JSON.parse(JSON.stringify(officialTeams));
 
-  const days = Math.floor(remaining / 86400);
-  const hours = Math.floor((remaining % 86400) / 3600);
-  const minutes = Math.floor((remaining % 3600) / 60);
-  const seconds = remaining % 60;
+function renderScoreboard(){
+  const scoreboard=document.getElementById("scoreboard");
+  scoreboard.innerHTML="";
 
-  document.getElementById("countdown").textContent =
-    days + "d " +
-    String(hours).padStart(2,"0") + ":" +
-    String(minutes).padStart(2,"0") + ":" +
-    String(seconds).padStart(2,"0");
-}
+  displayedTeams.forEach(team=>{
+    const card=document.createElement("div");
+    card.className="team";
+    card.style.setProperty("--team-color",team.color);
 
-function renderScoreboard() {
-  const scoreboard = document.getElementById("scoreboard");
-  scoreboard.innerHTML = "";
+    const header=document.createElement("div");
+    header.className="team-header";
 
-  displayedTeams.forEach(team => {
-    const card = document.createElement("div");
-    card.className = "team";
-    card.style.setProperty("--team-color", team.color);
+    const name=document.createElement("h2");
+    name.textContent=team.name;
 
-    const header = document.createElement("div");
-    header.className = "team-header";
-
-    const name = document.createElement("h2");
-    name.textContent = team.name;
-
-    const score = document.createElement("div");
-    score.className = "score";
-    score.textContent = team.score;
+    const score=document.createElement("div");
+    score.className="score";
+    score.textContent=team.score;
 
     header.appendChild(name);
     header.appendChild(score);
 
-    const playersSection = document.createElement("div");
-    playersSection.className = "players";
+    const playersSection=document.createElement("div");
+    playersSection.className="players";
 
-    const count = document.createElement("div");
-    count.className = "player-count";
-    count.textContent = team.players.length + " PLAYERS";
+    const count=document.createElement("div");
+    count.className="player-count";
+    count.textContent=team.players.length+" PLAYERS";
 
     playersSection.appendChild(count);
 
-    team.players.forEach(playerName => {
-      const player = document.createElement("div");
-      player.className = "player";
-      player.textContent = playerName;
+    team.players.forEach(playerName=>{
+      const player=document.createElement("div");
+      player.className="player";
+      player.textContent=playerName;
       playersSection.appendChild(player);
     });
 
@@ -355,138 +137,129 @@ function renderScoreboard() {
     scoreboard.appendChild(card);
   });
 
-  document.getElementById("gameNumber").textContent =
-    "Game: " + startingGame;
+  document.getElementById("gameNumber").textContent="Game: "+startingGame;
 }
 
-function toggleCustomize() {
-  const panel = document.getElementById("customizePanel");
-  const opening = panel.style.display !== "block";
-
-  panel.style.display = opening ? "block" : "none";
-
-  if (opening) {
-    renderEditor();
-  }
+function toggleCustomize(){
+  const panel=document.getElementById("customizePanel");
+  const opening=panel.style.display!=="block";
+  panel.style.display=opening?"block":"none";
+  if(opening) renderEditor();
 }
 
-function renderEditor() {
-  const editor = document.getElementById("teamEditor");
-  editor.innerHTML = "";
+function renderEditor(){
+  const editor=document.getElementById("teamEditor");
+  editor.innerHTML="";
 
-  displayedTeams.forEach((team,index) => {
-    const section = document.createElement("div");
-    section.className = "editor-team";
+  displayedTeams.forEach((team,index)=>{
+    const section=document.createElement("div");
+    section.className="editor-team";
 
-    const title = document.createElement("h3");
-    title.textContent = "Team " + (index + 1);
+    const title=document.createElement("h3");
+    title.textContent="Team "+(index+1);
     section.appendChild(title);
 
     section.appendChild(makeLabel("Team Name"));
-    section.appendChild(makeInput(team.name, value => {
-      team.name = value;
-    }));
+    section.appendChild(makeInput(team.name,value=>{team.name=value;}));
 
     section.appendChild(makeLabel("Team Color"));
-    const color = document.createElement("input");
-    color.type = "color";
-    color.value = team.color;
-    color.oninput = () => {
-      team.color = color.value;
-    };
+
+    const color=document.createElement("input");
+    color.type="color";
+    color.value=team.color;
+    color.oninput=()=>{team.color=color.value;};
     section.appendChild(color);
 
     section.appendChild(makeLabel("Score"));
-    const score = makeInput(team.score, value => {
-      team.score = Number(value) || 0;
-    });
-    score.type = "number";
+
+    const score=makeInput(team.score,value=>{team.score=Number(value)||0;});
+    score.type="number";
     section.appendChild(score);
 
     section.appendChild(makeLabel("Players (one name per line)"));
-    const players = document.createElement("textarea");
-    players.value = team.players.join("\n");
-    players.style.cssText =
-      "width:100%;height:100px;background:#292929;color:white;padding:10px;border:1px solid #555;border-radius:6px;";
-    players.oninput = () => {
-      team.players = players.value.split("\n").map(x => x.trim()).filter(Boolean);
-    };
+
+    const players=document.createElement("textarea");
+    players.value=team.players.join("\n");
+    players.style.cssText="width:100%;height:100px;background:#292929;color:white;padding:10px;border:1px solid #555;border-radius:6px;";
+    players.oninput=()=>{team.players=players.value.split("\n").map(x=>x.trim()).filter(Boolean);};
     section.appendChild(players);
 
-    const remove = document.createElement("button");
-    remove.className = "danger";
-    remove.textContent = "Remove Team";
-    remove.style.marginTop = "12px";
-    remove.onclick = () => {
-      displayedTeams.splice(index,1);
-      renderEditor();
-      renderScoreboard();
-    };
-    section.appendChild(remove);
+    const remove=document.createElement("button");
+    remove.className="danger";
+    remove.type="button";
+    remove.textContent="Remove Team";
+    remove.style.marginTop="12px";
+    remove.onclick=()=>{displayedTeams.splice(index,1);renderEditor();renderScoreboard();};
 
+    section.appendChild(remove);
     editor.appendChild(section);
   });
 }
 
-function makeLabel(text) {
-  const label = document.createElement("label");
-  label.textContent = text;
+function makeLabel(text){
+  const label=document.createElement("label");
+  label.textContent=text;
   return label;
 }
 
-function makeInput(value, callback) {
-  const input = document.createElement("input");
-  input.value = value;
-  input.oninput = () => callback(input.value);
+function makeInput(value,callback){
+  const input=document.createElement("input");
+  input.value=value;
+  input.oninput=()=>callback(input.value);
   return input;
 }
 
-function addTeam() {
-  displayedTeams.push({
-    name:"New Team",
-    color:"#555555",
-    score:0,
-    players:[]
-  });
+function addTeam(){
+  displayedTeams.push({name:"New Team",color:"#555555",score:0,players:[]});
   renderEditor();
   renderScoreboard();
 }
 
-function saveCustomization() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(displayedTeams));
-  renderScoreboard();
-  alert("Your personal scoreboard has been saved!");
+function saveCustomization(){
+  try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(displayedTeams));
+    renderScoreboard();
+    alert("Your personal scoreboard has been saved!");
+  }catch(error){
+    alert("Your browser couldn't save the customization.");
+  }
 }
 
-function resetCustomization() {
-  displayedTeams = structuredClone(officialTeams);
+function resetCustomization(){
+  displayedTeams=JSON.parse(JSON.stringify(officialTeams));
   localStorage.removeItem(STORAGE_KEY);
   renderEditor();
   renderScoreboard();
 }
 
-function updateCountdown() {
-  const remaining = Math.max(0, Math.ceil((countdownEnd - Date.now()) / 1000));
+function updateCountdown(){
+  const element=document.getElementById("countdown");
 
-  const hours = Math.floor(remaining / 3600);
-  const minutes = Math.floor((remaining % 3600) / 60);
-  const seconds = remaining % 60;
+  if(!Number.isFinite(countdownEnd)){
+    element.textContent="Invalid deadline";
+    return;
+  }
 
-  document.getElementById("countdown").textContent =
-    String(hours).padStart(2,"0") + ":" +
-    String(minutes).padStart(2,"0") + ":" +
-    String(seconds).padStart(2,"0");
+  const remaining=Math.max(0,Math.floor((countdownEnd-Date.now())/1000));
+  const days=Math.floor(remaining/86400);
+  const hours=Math.floor((remaining%86400)/3600);
+  const minutes=Math.floor((remaining%3600)/60);
+  const seconds=remaining%60;
+
+  element.textContent=days+"d "+String(hours).padStart(2,"0")+":"+String(minutes).padStart(2,"0")+":"+String(seconds).padStart(2,"0");
 }
 
-const savedTeams = localStorage.getItem(STORAGE_KEY);
+// Load this visitor's saved personal scoreboard, if available.
 
-if (savedTeams) {
-  try {
-    displayedTeams = JSON.parse(savedTeams);
-    personalMode = true;
-  } catch(error) {
-    displayedTeams = structuredClone(officialTeams);
+try{
+  const savedTeams=localStorage.getItem(STORAGE_KEY);
+
+  if(savedTeams){
+    const parsed=JSON.parse(savedTeams);
+    if(Array.isArray(parsed)) displayedTeams=parsed;
   }
+}catch(error){
+  displayedTeams=JSON.parse(JSON.stringify(officialTeams));
 }
 
 renderScoreboard();
@@ -494,6 +267,5 @@ updateCountdown();
 setInterval(updateCountdown,1000);
 
 </script>
-
 </body>
 </html>
